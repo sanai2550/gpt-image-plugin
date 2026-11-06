@@ -127,7 +127,11 @@ def api_base() -> str:
 
 
 def api_key() -> str | None:
-    return os.environ.get("GPT_IMAGE_API_KEY") or os.environ.get("OPENAI_API_KEY")
+    key = (os.environ.get("GPT_IMAGE_API_KEY") or os.environ.get("OPENAI_API_KEY") or "").strip()
+    key = key.strip("'\"")
+    if key.lower().startswith("bearer "):
+        key = key[7:].strip()
+    return key or None
 
 
 def call(url: str, body: bytes | None, ctype: str, key: str, timeout: int) -> dict:
