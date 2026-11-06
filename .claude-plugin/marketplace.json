@@ -1,0 +1,7 @@
+{
+  "name": "gpt-image-marketplace",
+  "owner": { "name": "dinhduc" },
+  "plugins": [
+    { "name": "gpt-image", "source": "./", "description": "OpenAI GPT Image 2.6 generate/edit skill" }
+  ]
+}
