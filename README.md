@@ -34,6 +34,12 @@ python3 skills/gpt-image/scripts/gpt_image.py models    # xem model ảnh provid
 { "env": { "GPT_IMAGE_BASE_URL": "https://cliproxyapi.nanonai.net/v1", "GPT_IMAGE_API_KEY": "..." } }
 ```
 
+## Chọn model
+
+- **Sunburst** (mặc định): ảnh dùng thực tế.
+- **Flare**: ảnh tạm, demo, test. Chỉ cần nói "tạo ảnh nháp/thử/demo ..." là Claude dùng Flare với chất lượng thấp cho nhanh và rẻ.
+- Ưng bản nháp thì bảo "làm bản chính thức", Claude sẽ tạo lại bằng Sunburst với cùng prompt.
+
 ## Dùng
 
 Cứ nói với Claude: *"Tạo cho tôi poster quảng cáo cà phê, chữ 'Cà Phê Sáng', dọc 1024x1536"* — skill sẽ tự viết prompt theo hướng dẫn của OpenAI, gọi API, mở ảnh kiểm tra và lặp lại nếu cần.
@@ -45,4 +51,4 @@ python3 skills/gpt-image/scripts/gpt_image.py edit "Change only ..." -i input.pn
 python3 skills/gpt-image/scripts/gpt_image.py --help
 ```
 
-Biến môi trường: `GPT_IMAGE_API_KEY`/`OPENAI_API_KEY` (bắt buộc), `GPT_IMAGE_BASE_URL`/`OPENAI_BASE_URL`, `GPT_IMAGE_MODEL` (mặc định `flare`), `OPENAI_ORG_ID`.
+Biến môi trường: `GPT_IMAGE_API_KEY`/`OPENAI_API_KEY` (bắt buộc), `GPT_IMAGE_BASE_URL`/`OPENAI_BASE_URL`, `GPT_IMAGE_MODEL` (mặc định `sunburst`), `OPENAI_ORG_ID`.

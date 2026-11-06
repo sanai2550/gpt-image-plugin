@@ -9,7 +9,7 @@ installed OpenAI SDK does not know them yet.
 Provider: works with any OpenAI-compatible endpoint (OpenAI, CLIProxyAPI, LiteLLM, ...).
   GPT_IMAGE_BASE_URL (or OPENAI_BASE_URL)  e.g. https://cliproxyapi.example.com/v1
   GPT_IMAGE_API_KEY  (or OPENAI_API_KEY)
-  GPT_IMAGE_MODEL    default model alias/id (flare)
+  GPT_IMAGE_MODEL    default model alias/id (sunburst)
 
 Examples
   gpt_image.py models
@@ -174,8 +174,8 @@ def main() -> None:
     for name in ("generate", "edit"):
         s = sub.add_parser(name)
         s.add_argument("prompt", help="prompt text, or @file.txt to read it from a file")
-        s.add_argument("-m", "--model", default=os.environ.get("GPT_IMAGE_MODEL", "flare"),
-                       help="flare | sunburst | full model id (default: flare)")
+        s.add_argument("-m", "--model", default=os.environ.get("GPT_IMAGE_MODEL", "sunburst"),
+                       help="sunburst (real use, default) | flare (drafts/tests) | full model id")
         s.add_argument("-s", "--size", help="auto, 1024x1024, 1536x1024, 1024x1536, or WxH")
         s.add_argument("-q", "--quality", choices=QUALITIES)
         s.add_argument("-c", "--complexity", choices=COMPLEXITIES,

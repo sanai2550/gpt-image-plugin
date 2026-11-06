@@ -1,6 +1,6 @@
 {
   "name": "gpt-image",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Generate and edit images with OpenAI GPT Image 2.6 (Flare / Sunburst): PNG/JPEG/WebP, transparent assets, SVG logos, looping GIFs, markup-guided edits.",
   "author": { "name": "dinhduc" },
   "keywords": ["image", "openai", "gpt-image", "generation"]

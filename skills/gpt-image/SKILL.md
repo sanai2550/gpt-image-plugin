@@ -12,6 +12,14 @@ If `CLAUDE_PLUGIN_ROOT` is empty (skill installed standalone), use the `scripts/
 
 The script reads `GPT_IMAGE_BASE_URL` (fallback `OPENAI_BASE_URL`, default `https://api.openai.com/v1`) and `GPT_IMAGE_API_KEY` (fallback `OPENAI_API_KEY`). The base URL must end in `/v1`. Before the first generation on a new provider, run `python3 "$S" models` to see which image model ids it exposes; if `gpt-image-2.6-*` isn't listed, use the closest listed id with `-m <id>` and tell the user. Parameters newer than the provider's backend (e.g. `complexity`, `markup`, svg/gif) may be rejected — on a 400 error, drop that field and retry once, and report it.
 
+## Model choice (user's rule)
+
+Always pass `-m` explicitly:
+- **`-m flare`** — only for throwaway work: the user says test, thử, demo, nháp, draft, tạm, preview, mockup to check an idea, "xem thử", or you are checking that the setup/API works. Also use `-q low` or `medium` for these.
+- **`-m sunburst`** — everything else, i.e. any image meant for real use (default when unclear). Use `-q medium` or higher.
+- If the user approves a flare draft and wants the final version, regenerate it with sunburst using the same prompt, size and references.
+- An explicit model request from the user always wins. Report the model used in your reply.
+
 ## Workflow
 
 1. **Understand the image**: intended use, subject, composition/aspect, style, exact text, references. Ask only if something essential is missing; otherwise pick sensible defaults.
@@ -26,7 +34,9 @@ The script reads `GPT_IMAGE_BASE_URL` (fallback `OPENAI_BASE_URL`, default `http
 S="${CLAUDE_PLUGIN_ROOT}/skills/gpt-image/scripts/gpt_image.py"
 
 # Generate
-python3 "$S" generate "PROMPT" -m flare -s 1024x1536 -q medium -o generated-images/poster.png
+python3 "$S" generate "PROMPT" -m sunburst -s 1024x1536 -q medium -o generated-images/poster.png
+# Quick draft / demo / test
+python3 "$S" generate "PROMPT" -m flare -q low -o generated-images/draft.png
 # Long prompt from a file
 python3 "$S" generate @prompt.txt -m sunburst -q high
 # Several variations
@@ -54,7 +64,7 @@ The script prints JSON `{model, saved[], seconds, usage}`. Unknown/new API field
 
 | Flag | Values | Guidance |
 |---|---|---|
-| `-m` | `flare` (default), `sunburst`, or full id | Flare = speed. Sunburst = demanding detail, dense layouts, precise edits. |
+| `-m` | `sunburst` (default), `flare`, or full id | Sunburst = real/final images. Flare = drafts, demos, tests (see Model choice). |
 | `-q` | `auto low medium high xhigh max` | Detail like texture and small lettering. Start `medium`; raise only if small text/detail fails. |
 | `-c` | `low medium high` | Planning before rendering. API default `high`. Use `low` for targeted single-detail edits; `high` when the prompt leaves design open. Fully specified designs barely change. Tune quality OR complexity, never both at once. |
 | `-s` | `auto`, `1024x1024`, `1536x1024`, `1024x1536`, custom | Custom: both edges multiples of 16, aspect between 1:3 and 3:1 (e.g. slide `1536x864`). |
